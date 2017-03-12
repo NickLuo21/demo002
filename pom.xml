@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <groupId>com.nick.demo002</groupId>
     <artifactId>demo002</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -137,6 +137,25 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <!--Build exploded war-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>war-exploded</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exploded</goal>
+                        </goals>
+                        <configuration>
+                            <webappDirectory>${project.build.directory}/war-plugin</webappDirectory>
+                            <archiveClasses>true</archiveClasses>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -155,7 +174,7 @@
             <id>wrapper</id>
             <properties>
                 <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-                <daemon.main.class>${daemon.main.class}</daemon.main.class>
+                <daemon.main.class>com.nick.DemoMain</daemon.main.class>
             </properties>
             <activation>
                 <file>
@@ -169,77 +188,51 @@
                         <artifactId>appassembler-maven-plugin</artifactId>
                         <version>1.10</version>
                         <configuration>
-                            <configurationDirectory>conf</configurationDirectory>
-                            <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
-                            <copyConfigurationDirectory>true</copyConfigurationDirectory>
-                            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-                            <useWildcardClassPath>true</useWildcardClassPath>
+                            <assembleDirectory>${project.build.directory}/appassembler-plugin</assembleDirectory>
                             <repositoryLayout>flat</repositoryLayout>
-                            <repositoryName>lib</repositoryName>
+                            <repositoryName>webapp/WEB-INF/lib</repositoryName>
+                            <generateRepository>false</generateRepository>
+                            <programs>
+                                <program>
+                                    <id>${project.build.finalName}</id>
+                                    <mainClass>com.nick.DemoMain</mainClass>
+                                </program>
+                            </programs>
                             <binFileExtensions>
                                 <unix>.sh</unix>
                             </binFileExtensions>
                             <daemons>
                                 <daemon>
-                                    <mainClass>${daemon.main.class}</mainClass>
-                                    <jvmSettings>
-                                        <extraArguments>
-                                            <extraArgument>-Xms512m</extraArgument>
-                                            <extraArgument>-Xmx2048m</extraArgument>
-                                            <!--<extraArgument>-Dcom.sun.management.jmxremote</extraArgument>
-                                            <extraArgument>-Dcom.sun.management.jmxremote.ssl=false</extraArgument>
-                                            <extraArgument>-Dcom.sun.management.jmxremote.authenticate=false</extraArgument>
-                                            <extraArgument>-Dcom.sun.management.jmxremote.port=1098</extraArgument>-->
-                                        </extraArguments>
-                                    </jvmSettings>
+                                    <id>${project.build.finalName}</id>
+                                    <mainClass>com.nick.DemoMain</mainClass>
                                     <generatorConfigurations>
                                         <generatorConfiguration>
                                             <generator>jsw</generator>
                                             <includes>
                                                 <include>linux-x86-64</include>
-                                                <include>windows-x86-64</include>
                                                 <include>macosx-universal-64</include>
+                                                <include>windows-x86-64</include>
                                             </includes>
-                                            <configuration>
-                                                <property>
-                                                    <name>configuration.directory.in.classpath.first</name>
-                                                    <value>conf</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.logfile</name>
-                                                    <value>logs/${project.artifactId}.log</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.console.format</name>
-                                                    <value>PM</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.logfile.format</name>
-                                                    <value>PM</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.logfile.maxsize</name>
-                                                    <value>10m</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.logfile.maxfiles</name>
-                                                    <value>1</value>
-                                                </property>
-                                            </configuration>
                                         </generatorConfiguration>
                                     </generatorConfigurations>
+                                    <jvmSettings>
+                                        <initialMemorySize>512M</initialMemorySize>
+                                        <maxMemorySize>4G</maxMemorySize>
+                                        <extraArguments>
+                                            <extraArgument>-Ddeamon-webapp=webapp</extraArgument>
+                                        </extraArguments>
+                                    </jvmSettings>
                                     <platforms>
                                         <platform>jsw</platform>
                                     </platforms>
-                                    <id>${project.artifactId}</id>
                                 </daemon>
                             </daemons>
                         </configuration>
                         <executions>
                             <execution>
-                                <id>build-deploy-dir</id>
                                 <phase>package</phase>
                                 <goals>
+                                    <goal>assemble</goal>
                                     <goal>generate-daemons</goal>
                                 </goals>
                             </execution>

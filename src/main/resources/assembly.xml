@@ -10,30 +10,33 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>target/generated-resources/appassembler/jsw/${project.artifactId}/lib</directory>
-      <outputDirectory>lib</outputDirectory>
-      <excludes>
-        <exclude>maven-metadata-appassembler.xml</exclude>
-      </excludes>
+      <directory>target/war-plugin</directory>
+      <outputDirectory>/webapp</outputDirectory>
+      <includes>
+        <include>**</include>
+      </includes>
     </fileSet>
     <fileSet>
-      <directory>target/generated-resources/appassembler/jsw/${project.artifactId}/conf</directory>
-      <outputDirectory>conf</outputDirectory>
-      <excludes>
-        <exclude>VAADIN/**</exclude>
-      </excludes>
+      <directory>target/appassembler-plugin/bin</directory>
+      <outputDirectory>/bin</outputDirectory>
+      <includes>
+        <include>**</include>
+      </includes>
+      <fileMode>755</fileMode>
     </fileSet>
     <fileSet>
-      <directory>target/generated-resources/appassembler/jsw/${project.artifactId}/bin</directory>
-      <outputDirectory>bin</outputDirectory>
-      <fileMode>0755</fileMode>
-      <lineEnding>keep</lineEnding>
+      <directory>target/generated-resources/appassembler/jsw/${project.build.finalName}/</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>**</include>
+      </includes>
+      <fileMode>755</fileMode>
     </fileSet>
     <fileSet>
-      <directory>target/generated-resources/appassembler/jsw/${project.artifactId}/bin</directory>
-      <outputDirectory>logs</outputDirectory>
+      <directory>./</directory>
+      <outputDirectory>/logs</outputDirectory>
       <excludes>
-        <exclude>*</exclude>
+        <exclude>*/**</exclude>
       </excludes>
     </fileSet>
   </fileSets>
