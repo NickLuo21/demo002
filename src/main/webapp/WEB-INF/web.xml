@@ -14,9 +14,6 @@
         如bean的定义文件.classpath*:的出现是为了从多个jar文件中加载相同的文件.classpath:只能加载找到的第一个文件 -->
         <param-value>classpath:META-INF/spring/demo-beans.xml</param-value>
     </context-param>
-    <!--<listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>-->
 
     <listener>
         <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
@@ -25,26 +22,4 @@
     <listener>
         <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
     </listener>
-
-    <!-- config request scope -->
-    <!--<listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>-->
-
-    <servlet>
-        <servlet-name>Resteasy</servlet-name>
-        <servlet-class>
-            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-        </servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>com.nick.DemoApplication</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Resteasy</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
-
 </web-app>

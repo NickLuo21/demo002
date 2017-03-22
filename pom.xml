@@ -188,7 +188,12 @@
                         <artifactId>appassembler-maven-plugin</artifactId>
                         <version>1.10</version>
                         <configuration>
-                            <assembleDirectory>${project.build.directory}/appassembler-plugin</assembleDirectory>
+                            <!--<assembleDirectory>${project.build.directory}/appassembler-plugin</assembleDirectory>-->
+                            <configurationDirectory>conf</configurationDirectory>
+                            <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
+                            <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                            <useWildcardClassPath>true</useWildcardClassPath>
                             <repositoryLayout>flat</repositoryLayout>
                             <repositoryName>webapp/WEB-INF/lib</repositoryName>
                             <generateRepository>false</generateRepository>
@@ -213,6 +218,28 @@
                                                 <include>macosx-universal-64</include>
                                                 <include>windows-x86-64</include>
                                             </includes>
+                                            <configuration>
+                                                <property>
+                                                    <name>wrapper.logfile</name>
+                                                    <value>logs/${project.artifactId}.log</value>
+                                                </property>
+                                                <property>
+                                                    <name>wrapper.console.format</name>
+                                                    <value>PM</value>
+                                                </property>
+                                                <property>
+                                                    <name>wrapper.logfile.format</name>
+                                                    <value>PM</value>
+                                                </property>
+                                                <property>
+                                                    <name>wrapper.logfile.maxsize</name>
+                                                    <value>10m</value>
+                                                </property>
+                                                <property>
+                                                    <name>wrapper.logfile.maxfiles</name>
+                                                    <value>1</value>
+                                                </property>
+                                            </configuration>
                                         </generatorConfiguration>
                                     </generatorConfigurations>
                                     <jvmSettings>
