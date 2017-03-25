@@ -174,7 +174,6 @@
             <id>wrapper</id>
             <properties>
                 <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-                <daemon.main.class>com.nick.DemoMain</daemon.main.class>
             </properties>
             <activation>
                 <file>
@@ -199,8 +198,8 @@
                             <generateRepository>false</generateRepository>
                             <programs>
                                 <program>
-                                    <id>${project.build.finalName}</id>
-                                    <mainClass>com.nick.DemoMain</mainClass>
+                                    <id>${project.artifactId}</id>
+                                    <mainClass>${daemon.main.class}</mainClass>
                                 </program>
                             </programs>
                             <binFileExtensions>
@@ -208,8 +207,8 @@
                             </binFileExtensions>
                             <daemons>
                                 <daemon>
-                                    <id>${project.build.finalName}</id>
-                                    <mainClass>com.nick.DemoMain</mainClass>
+                                    <id>${project.artifactId}</id>
+                                    <mainClass>${daemon.main.class}</mainClass>
                                     <generatorConfigurations>
                                         <generatorConfiguration>
                                             <generator>jsw</generator>

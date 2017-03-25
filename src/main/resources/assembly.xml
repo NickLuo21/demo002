@@ -24,12 +24,16 @@
       </includes>
       <fileMode>755</fileMode>
     </fileSet>
+    <!--wrapper.jar is in jsw/webapp, need copy from here-->
     <fileSet>
-      <directory>target/generated-resources/appassembler/jsw/${project.build.finalName}/</directory>
+      <directory>target/generated-resources/appassembler/jsw/${project.artifactId}/</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>**</include>
       </includes>
+      <excludes>
+        <exclude>conf/assembly.xml</exclude>
+      </excludes>
       <fileMode>755</fileMode>
     </fileSet>
     <fileSet>
