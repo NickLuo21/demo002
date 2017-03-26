@@ -1,7 +1,9 @@
 package com.nick.restful;
 
+import com.google.common.base.Preconditions;
 import com.nick.model.DemoEntity;
 import com.nick.service.DemoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -32,6 +34,7 @@ public class DemoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public DemoEntity getUserById(@PathParam("id") String id)
     {
+        Preconditions.checkArgument(StringUtils.isNotEmpty(id), "user id should not be empty!");
         DemoEntity entity = demoService.getEntityById(Long.valueOf(id));
         return entity;
     }
